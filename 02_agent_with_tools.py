@@ -1,3 +1,8 @@
+# 02 — Agent with Tools (Function Calling)
+# The agent calls a local Python function when it needs external data.
+# The framework handles tool schema generation and the call roundtrip automatically.
+# Just define a function with type annotations and pass it to `tools=`.
+
 import asyncio
 import os
 from typing import Annotated

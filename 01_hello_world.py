@@ -1,3 +1,7 @@
+# 01 — Hello World
+# Single agent, one question, one answer.
+# Validates that auth, packages, and the model deployment all work.
+
 import asyncio
 import os
 
