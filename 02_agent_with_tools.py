@@ -1,11 +1,21 @@
 import asyncio
 import os
+from typing import Annotated
 
 from dotenv import load_dotenv
 from azure.identity import AzureCliCredential
 from agent_framework.openai import OpenAIChatCompletionClient
+from pydantic import Field
 
 load_dotenv()
+
+
+def get_weather(
+    city: Annotated[str, Field(description="The city name, e.g. 'La Paz'")],
+) -> str:
+    """Get the current weather for a given city."""
+    return f"It is sunny and 18°C in {city}."
+
 
 agent = OpenAIChatCompletionClient(
     model="gpt-5.4-mini",
@@ -13,12 +23,13 @@ agent = OpenAIChatCompletionClient(
     api_version="2024-12-01-preview",
     credential=AzureCliCredential(),
 ).as_agent(
-    instructions="You are a friendly assistant. Keep answers brief.",
+    instructions="You are a helpful weather assistant.",
+    tools=[get_weather],
 )
 
 
 async def main():
-    result = await agent.run("What is the largest city in France?")
+    result = await agent.run("What's the weather like in La Paz?")
     print(result.text)
 
 
