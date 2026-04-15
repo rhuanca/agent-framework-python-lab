@@ -2,6 +2,20 @@
 # A triage agent routes questions to specialized agents.
 # The handoff pattern is decentralized — agents transfer control to each other
 # via tool calls, and the full conversation history follows along.
+#
+#   ┌─────────────┐
+#   │  User Input  │
+#   └──────┬──────┘
+#          ▼
+#   ┌─────────────┐
+#   │ TriageAgent  │──── classifies the question
+#   └──────┬──────┘
+#          ├── data? ──────► ┌─────────────┐
+#          │                 │ DataExpert   │──► answer
+#          │                 └─────────────┘
+#          └── code? ──────► ┌─────────────┐
+#                            │ CodeReviewer │──► answer
+#                            └─────────────┘
 
 import asyncio
 import os
@@ -53,9 +67,12 @@ workflow = (
 
 
 async def main():
-    result = await workflow.run(
-        "Can you review this PySpark join and tell me if it has performance issues?"
-    )
+    print("Ask a data engineering or code review question (type 'exit' to quit):")
+    user_input = input("You: ")
+    if not user_input or user_input == "exit":
+        return
+
+    result = await workflow.run(user_input)
     for output in result.get_outputs():
         print(output.text)
 
