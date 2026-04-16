@@ -28,6 +28,9 @@ cp .env.example .env   # set AZURE_OPENAI_ENDPOINT
 | `02_agent_with_tools.py` | Function calling | `Annotated` + `Field` for tool params, `tools=[fn]` |
 | `03_multi_turn_session.py` | Conversation memory | `.create_session()`, `session=` on `.run()` |
 | `04_two_agent_handoff.py` | Multi-agent routing | `HandoffBuilder`, `.add_handoff()`, `.with_autonomous_mode()` |
+| `05_memory.py` | Context providers | `ContextProvider`, `SessionContext`, `extend_instructions()`, session state |
+| `06_first_workflow.py` | Executor workflows | `Executor`, `WorkflowBuilder`, `@executor`, `@handler`, `send_message()`, `yield_output()` |
+| `07_hosting_azure_functions.py` | Azure Functions hosting | `AgentFunctionApp`, Durable Functions, HTTP endpoint |
 
 ## Key SDK Patterns
 
